@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Home, Shield, User, Plus, Settings, Key, Fingerprint, HelpCircle, LogOut, ChevronRight, Crown } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Profile = ({ onNavigate }) => {
+  const [faceIdEnabled, setFaceIdEnabled] = useState(true);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+  };
+
   return (
-    <div className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans pb-4">
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 1.02 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans pb-4"
+    >
       {/* BACKGROUND ELEMENTS */}
       <div className="absolute top-0 left-0 w-[120%] h-[60%] -translate-x-[10%] bg-[radial-gradient(ellipse_at_top,#2A2A30_0%,transparent_70%)] opacity-70 pointer-events-none"></div>
       <div className="absolute top-0 left-0 w-full h-[60%] bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)] pointer-events-none"></div>
@@ -55,10 +73,10 @@ const Profile = ({ onNavigate }) => {
         </div>
 
         {/* SETTINGS GROUPS */}
-        <div className="mt-6 space-y-6">
+        <motion.div variants={containerVariants} initial="hidden" animate="show" className="mt-6 space-y-6">
           
           {/* Security Group */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h3 className="text-gray-400 text-[13px] font-[600] uppercase tracking-wider mb-3 px-2">Security</h3>
             <div className="w-full bg-[#161618] rounded-[2rem] px-5 py-2">
               
@@ -79,9 +97,17 @@ const Profile = ({ onNavigate }) => {
                   </div>
                   <span className="ml-4 text-white text-[16px] font-[500]">Face ID / Biometrics</span>
                 </div>
-                {/* Toggle switch simulation */}
-                <div className="w-12 h-7 bg-[#34C759] rounded-full p-0.5 shadow-inner">
-                  <div className="w-6 h-6 bg-white rounded-full shadow-sm transform translate-x-5"></div>
+                {/* Interactive Motion Toggle */}
+                <div 
+                  className={`w-12 h-7 rounded-full p-0.5 shadow-inner flex items-center transition-colors cursor-pointer ${faceIdEnabled ? 'bg-[#34C759]' : 'bg-gray-600'}`}
+                  onClick={() => setFaceIdEnabled(!faceIdEnabled)}
+                  style={{ justifyContent: faceIdEnabled ? 'flex-end' : 'flex-start' }}
+                >
+                  <motion.div 
+                    layout 
+                    transition={{ type: "spring", stiffness: 700, damping: 30 }}
+                    className="w-6 h-6 bg-white rounded-full shadow-sm"
+                  ></motion.div>
                 </div>
               </div>
 
@@ -96,10 +122,10 @@ const Profile = ({ onNavigate }) => {
               </div>
 
             </div>
-          </div>
+          </motion.div>
 
           {/* General Group */}
-          <div>
+          <motion.div variants={itemVariants}>
             <h3 className="text-gray-400 text-[13px] font-[600] uppercase tracking-wider mb-3 px-2">General</h3>
             <div className="w-full bg-[#161618] rounded-[2rem] px-5 py-2">
               
@@ -124,15 +150,24 @@ const Profile = ({ onNavigate }) => {
               </div>
 
             </div>
-          </div>
+          </motion.div>
 
           {/* Log Out Button */}
-          <button className="w-full bg-[#161618] hover:bg-[#1A1A1C] transition-colors rounded-[2rem] p-5 flex items-center justify-center border border-white/5 mt-4 group">
+          <motion.button 
+            variants={itemVariants}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              localStorage.removeItem('arcvault_token');
+              onNavigate('auth');
+            }}
+            className="w-full bg-[#161618] hover:bg-[#1A1A1C] transition-colors rounded-[2rem] p-5 flex items-center justify-center border border-white/5 mt-4 group"
+          >
             <LogOut className="w-[18px] h-[18px] text-[#FF453A] group-hover:scale-110 transition-transform" />
             <span className="ml-3 text-[#FF453A] text-[16px] font-[600]">Sign Out</span>
-          </button>
+          </motion.button>
 
-        </div>
+        </motion.div>
       </div>
 
       {/* FLOATING BOTTOM NAV BAR */}
@@ -173,7 +208,7 @@ const Profile = ({ onNavigate }) => {
           <Plus className="w-6 h-6 text-black stroke-[2]" />
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
