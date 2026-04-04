@@ -1,0 +1,224 @@
+import React, { useState, useEffect } from 'react';
+import { Search, SlidersHorizontal, Wand2, ChevronRight, Home, Shield, User, Plus, Menu, Link as LinkIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const Dashboard = ({ onNavigate }) => {
+  const [vaultItems, setVaultItems] = useState([]);
+  
+  useEffect(() => {
+    const fetchVault = async () => {
+      const token = localStorage.getItem('arcvault_token');
+      if (!token) {
+        onNavigate('auth');
+        return;
+      }
+      
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      try {
+        const res = await fetch(`${API_URL}/api/vault`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setVaultItems(data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch vault state');
+      }
+    };
+    fetchVault();
+  }, []);
+
+  // Layout and container staggered motion variants
+  const listVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+  };
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 1.02 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans pb-4"
+    >
+      {/* BACKGROUND ELEMENTS */}
+      {/* 1. Top Light Radial Glow */}
+      <div className="absolute top-0 left-0 w-[120%] h-[60%] -translate-x-[10%] bg-[radial-gradient(ellipse_at_top,#2A2A30_0%,transparent_70%)] opacity-70"></div>
+      
+      {/* 2. Grid Overlay (fades out at bottom) */}
+      <div className="absolute top-0 left-0 w-full h-[60%] bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)]"></div>
+
+      {/* TOP STATUS BAR (Dynamic Island) */}
+      <div className="w-full h-12 flex justify-between items-center px-6 pt-2 z-50 text-white font-[600] text-[13px] absolute top-0 pointer-events-none">
+        <span className="tracking-tight mt-1">9:41</span>
+        
+        {/* Dynamic Island */}
+        <div className="w-[110px] h-[32px] bg-black rounded-full absolute left-1/2 -translate-x-1/2 mt-1 shadow-sm"></div>
+
+        <div className="flex items-center space-x-1.5 opacity-90 mt-1">
+           {/* Cellular */}
+           <svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor">
+              <rect x="0" y="6" width="2.5" height="4" rx="0.5" />
+              <rect x="4" y="4" width="2.5" height="6" rx="0.5" />
+              <rect x="8" y="2" width="2.5" height="8" rx="0.5" />
+              <rect x="12" y="0" width="2.5" height="10" rx="0.5" />
+           </svg>
+           {/* WiFi */}
+           <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor">
+              <path d="M7 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+              <path d="M3.5 6.5a5 5 0 0 1 7 0 .5.5 0 0 1-.7.7 4 4 0 0 0-5.6 0 .5.5 0 0 1-.7-.7z"/>
+              <path d="M1 4a8.5 8.5 0 0 1 12 0 .5.5 0 0 1-.7.7 7.5 7.5 0 0 0-10.6 0A.5.5 0 0 1 1 4z"/>
+           </svg>
+           {/* Battery */}
+           <div className="w-[22px] h-[11px] border border-white/40 rounded-[4px] p-[1.5px] flex relative ml-0.5">
+             <div className="h-full w-full bg-[#34C759] rounded-[2px]"></div>
+             <div className="absolute right-[-2.5px] top-[3px] w-[2px] h-[3px] bg-white/40 rounded-r-full"></div>
+           </div>
+        </div>
+      </div>
+
+      {/* TOP NAVIGATION */}
+      <div className="flex justify-between items-center w-full px-6 pt-16 z-20 relative">
+        <div className="flex items-center space-x-2">
+          {/* Logo SVG (Proton style block arrow) */}
+          <div className="w-[22px] h-[22px] bg-white rounded-[5px] transform rotate-45 flex items-center justify-center overflow-hidden">
+            <div className="transform -rotate-45 text-black flex items-center justify-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="black" strokeWidth="1">
+                 <path d="M5 2 h8 a6 6 0 0 1 6 6 v2 a6 6 0 0 1 -6 6 h-8 z" />
+                 <path d="M10 8 L16 8 L13 14 Z" fill="white" />
+              </svg>
+            </div>
+          </div>
+          <span className="text-white font-semibold text-[18px] tracking-tight">ArcVault</span>
+        </div>
+        <button className="w-10 h-10 rounded-full border-[1.5px] border-white/10 bg-[#151515]/60 flex items-center justify-center backdrop-blur-md">
+          <Menu className="w-5 h-5 text-white/80 stroke-[1.5]" />
+        </button>
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-6 relative z-20 no-scrollbar pb-24">
+        {/* HERO TEXT */}
+        <div className="mt-8 text-[44px] font-[600] text-white leading-[1.2] tracking-tight">
+          <div>Stay Fast.</div>
+          <div className="mt-1">Stay Secure.</div>
+        </div>
+
+        {/* SEARCH BAR */}
+        <div className="w-full h-14 bg-[#1C1C1E] rounded-full flex items-center px-4 mt-10 shadow-[inset_0_1px_2px_rgba(255,255,255,0.05),0_4px_10px_rgba(0,0,0,0.2)]">
+          <Search className="w-5 h-5 text-gray-400 ml-1" strokeWidth={1.5} />
+          <input className="flex-1 bg-transparent text-white px-3 focus:outline-none placeholder:text-gray-400 text-[15px]" placeholder="Search" />
+          <div className="w-[34px] h-[34px] rounded-full bg-[#2C2C2E] flex items-center justify-center">
+            <SlidersHorizontal className="w-[18px] h-[18px] text-gray-300 stroke-[1.5]" />
+          </div>
+        </div>
+
+        {/* AUTOFILL BANNER */}
+        <div className="w-full h-[76px] bg-gradient-to-r from-[#2C2C2E] to-[#1A1A1C] rounded-[2.5rem] flex items-center px-3 mt-6 shadow-[inset_0_1px_2px_rgba(255,255,255,0.1),0_8px_20px_rgba(0,0,0,0.4)] border border-white/5 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-full h-full bg-white/5 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.2)_0%,transparent_60%)]"></div>
+          
+          <div className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center shadow-[0_4px_10px_rgba(0,0,0,0.3)] z-10 shrink-0">
+            <Wand2 className="w-[22px] h-[22px] text-black stroke-[1.5]" />
+          </div>
+          <div className="ml-4 flex-1 z-10">
+            <div className="text-white font-[500] text-[15px] tracking-tight">Enjoy the magic of AutoFill</div>
+            <div className="text-gray-400 text-[13px] mt-0.5 tracking-tight">Stay Safe, Stay Secure</div>
+          </div>
+          <ChevronRight className="w-5 h-5 text-gray-400 z-10 mr-2" strokeWidth={1.5} />
+        </div>
+
+        {/* LIST SECTION */}
+        <div className="flex justify-between items-center mt-8 mb-4 px-1">
+          <h3 className="text-white font-medium text-[15px]">Today</h3>
+          <button className="text-gray-400 text-[13px] hover:text-white transition-colors">See All</button>
+        </div>
+
+        {/* CARDS */}
+        <motion.div 
+          variants={listVariants}
+          initial="hidden"
+          animate="show"
+          className="space-y-3"
+        >
+          {vaultItems.length === 0 ? (
+            <motion.div variants={itemVariants} className="text-gray-500 text-[14px] px-2 text-center mt-6">Your vault is completely empty.<br/>Click the + button to add passwords.</motion.div>
+          ) : (
+            vaultItems.map(item => (
+              <motion.div 
+                key={item.id} 
+                variants={itemVariants}
+                whileTap={{ scale: 0.97 }}
+                className="w-full h-[76px] bg-[#161618] rounded-[2rem] flex items-center px-4 cursor-pointer hover:bg-[#1c1c1e] transition-colors border border-transparent hover:border-white/5"
+              >
+                <div className="w-[46px] h-[46px] rounded-full flex items-center justify-center shrink-0 shadow-lg text-white font-[600] tracking-widest text-[14px]" style={{ backgroundColor: item.icon_color || '#333' }}>
+                  {item.title.substring(0, 2).toUpperCase()}
+                </div>
+                <div className="ml-4 flex-1 truncate pr-2">
+                  <div className="text-white font-medium text-[15px]">{item.title}</div>
+                  <div className="text-gray-400 text-[13px] truncate tracking-tight mt-[1px]">{item.username || 'No username saved'}</div>
+                </div>
+                <LinkIcon className="w-[18px] h-[18px] text-gray-400 shrink-0 stroke-[1.5] mr-1" />
+              </motion.div>
+            ))
+          )}
+        </motion.div>
+        
+        {/* Padding for bottom float nav */}
+        <div className="h-10"></div>
+      </div>
+
+      {/* FLOATING BOTTOM NAV BAR */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center bg-[#131315]/80 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.8)] rounded-full py-[5px] px-[5px]">
+        {/* Nav Group */}
+        <div className="flex items-center space-x-2 mr-2 pr-2 border-r border-white/10">
+          {/* Active Home */}
+          <button className="w-12 h-12 bg-[#D1D1D1] rounded-full flex items-center justify-center shadow-[inset_0_-2px_4px_rgba(0,0,0,0.1)]">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="black" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <path d="M9 22V12h6v10" fill="white" stroke="black"/>
+            </svg>
+          </button>
+          
+          {/* Shield */}
+          <button className="w-12 h-12 bg-[#1C1C1E] hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="M12 8v4" />
+              <path d="M12 16h.01" strokeWidth="2" />
+            </svg>
+          </button>
+          
+          {/* User */}
+          <button 
+            onClick={() => onNavigate('profile')}
+            className="w-12 h-12 bg-[#1C1C1E] hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors"
+          >
+            <User className="w-[20px] h-[20px] text-white stroke-[1.5]" />
+          </button>
+        </div>
+
+        {/* Floating Add Button in the pill */}
+        <button 
+          onClick={() => onNavigate('generator')}
+          className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_2px_8px_rgba(255,255,255,0.2)] ml-1 hover:scale-105 active:scale-95 transition-transform"
+        >
+          <Plus className="w-6 h-6 text-black stroke-[2]" />
+        </button>
+      </div>
+    </motion.div>
+  );
+};
+
+export default Dashboard;

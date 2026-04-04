@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-[#e5e5e5] text-black font-sans antialiased;
+  }
+}
+
+/* Base geometric styling */
+.geometric-card {
+  @apply bg-card rounded-3xl overflow-hidden;
+}
+
+/* Custom scrollbar for desktop */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Ensure the app is centered and looks like mobile app */
+#root {
+  @apply min-h-screen flex items-center justify-center;
+}
+
+/* Custom Clip Paths for Onboarding Artwork */
+.clip-triangle-tr {
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+.clip-triangle-tl {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+.clip-triangle-br {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+.clip-inner-cutout {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 25% 100%, 25% 25%, 0 25%);
+}
