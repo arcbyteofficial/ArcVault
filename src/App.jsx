@@ -14,7 +14,7 @@ function App() {
   };
 
   return (
-    <div className="w-full max-w-[375px] h-screen max-h-[812px] bg-white sm:rounded-[3rem] shadow-2xl overflow-hidden relative flex flex-col font-sans">
+    <div className="w-full h-[100dvh] bg-[#0A0A0A] sm:max-w-[400px] sm:max-h-[850px] sm:rounded-[3rem] sm:border-[8px] sm:border-[#111] overflow-hidden relative flex flex-col font-sans sm:my-auto sm:shadow-2xl shadow-none">
       <div className="flex-1 overflow-hidden relative">
         <AnimatePresence mode="wait">
           {currentScreen === 'onboarding' && <Onboarding key="onboarding" onContinue={() => navigate('auth')} />}

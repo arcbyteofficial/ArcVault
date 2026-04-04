@@ -3,7 +3,7 @@
 
 @layer base {
   body {
-    @apply bg-[#e5e5e5] text-black font-sans antialiased;
+    @apply bg-[#030303] text-black font-sans antialiased;
   }
 }
 
@@ -12,19 +12,12 @@
   @apply bg-card rounded-3xl overflow-hidden;
 }
 
-/* Custom scrollbar for desktop */
+/* Hide global scrollbars for native app feel */
 ::-webkit-scrollbar {
-  width: 6px;
+  display: none;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+* {
+  scrollbar-width: none;
 }
 
 /* Ensure the app is centered and looks like mobile app */
