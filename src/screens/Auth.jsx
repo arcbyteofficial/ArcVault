@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, Mail, Lock, Eye, EyeOff, User, Phone, ShieldCheck, Unlock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import arcbyteLogo from '../assets/arcbyte.co Logo_white_transparent.png';
 
 const Auth = ({ onNavigate, onLoginSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -64,18 +65,36 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 1.02 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans"
+      className="w-full h-full bg-[#060606] flex flex-col relative overflow-hidden font-sans"
     >
       
+      {/* PROTON PASS AESTHETIC BACKGROUND */}
+      <div className="absolute inset-0 bg-[#060606]"></div>
+      <div className="absolute top-[-30%] left-[-30%] w-[130%] h-[130%] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.95)_0%,rgba(255,255,255,0.3)_15%,rgba(255,255,255,0.05)_30%,transparent_50%)] pointer-events-none z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-[100%] bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:42px_42px] pointer-events-none [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)] z-0"></div>
+      <svg className="absolute right-[-4%] top-[18%] w-[85%] h-auto max-h-[60%] drop-shadow-[0_0_25px_rgba(0,0,0,0.8)] z-0" viewBox="0 0 240 340" fill="none">
+        <path 
+          d="M 260 0 L 100 0 A 40 40 0 0 0 60 40 L 60 70 A 50 50 0 0 1 60 170 L 140 170 L 140 240 L 60 240 A 50 50 0 0 0 110 340 L 260 340 Z" 
+          fill="#0C0C0C" 
+          fillOpacity="0.92" 
+          stroke="rgba(255,255,255,0.04)" 
+          strokeWidth="1.5" 
+        />
+      </svg>
+      <div className="absolute top-[32%] left-[38%] w-[2px] h-[2px] bg-white rounded-full opacity-80 shadow-[0_0_6px_2px_rgba(255,255,255,0.8)] z-0"></div>
+      <div className="absolute top-[24%] left-[62%] w-[1.5px] h-[1.5px] bg-white rounded-full opacity-60 shadow-[0_0_5px_1px_rgba(255,255,255,0.6)] z-0"></div>
+      <div className="absolute top-[52%] right-[22%] w-[2px] h-[2px] bg-white rounded-full opacity-50 shadow-[0_0_5px_1px_rgba(255,255,255,0.5)] z-0"></div>
+      <div className="absolute top-[18%] right-[10%] w-[1px] h-[1px] bg-white rounded-full opacity-40 shadow-[0_0_3px_1px_rgba(255,255,255,0.5)] z-0"></div>
+
       {/* SUCCESS OVERLAY */}
       <AnimatePresence>
         {showSuccess && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="absolute inset-0 z-[100] bg-[#0A0A0A] flex flex-col items-center justify-center overflow-hidden"
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 z-[100] bg-[#060606]/70 flex flex-col items-center justify-center overflow-hidden"
           >
             {/* Radial Glow Map */}
             <motion.div 
@@ -91,7 +110,11 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
               transition={{ delay: 0.2, type: 'spring', damping: 20, stiffness: 300 }}
               className="flex flex-col items-center relative z-10"
             >
-              <div className="w-24 h-24 rounded-full border border-white/10 bg-[#161618] shadow-[inset_0_2px_15px_rgba(255,255,255,0.05),0_10px_40px_rgba(0,0,0,0.8)] mb-8 flex items-center justify-center relative">
+              <motion.div 
+                animate={{ scale: [1, 1.05, 1], boxShadow: ['0 0 0px rgba(255,255,255,0)', '0 0 30px rgba(255,255,255,0.15)', '0 0 0px rgba(255,255,255,0)'] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="w-[100px] h-[100px] rounded-full border-[1.5px] border-white/20 bg-gradient-to-br from-[#1A1A1A] to-[#050505] shadow-[inset_0_4px_20px_rgba(255,255,255,0.15),0_10px_40px_rgba(0,0,0,0.8)] mb-8 flex items-center justify-center relative"
+              >
                  {/* Lock Morph Sequence */}
                  <motion.div
                    initial={{ rotateY: 0 }}
@@ -116,7 +139,7 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
                      <Unlock className="w-8 h-8 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" strokeWidth={2} />
                    </motion.div>
                  </motion.div>
-              </div>
+              </motion.div>
 
               <motion.h2 
                 initial={{ opacity: 0, y: 10 }}
@@ -143,15 +166,20 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
       <div className="w-full h-12 shrink-0 relative z-50"></div>
 
       {/* TOP HEADER SECTION */}
-      <div className="px-8 pt-2 pb-6 shrink-0 relative z-20">
-        <motion.button 
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+      <div className="px-8 pt-6 pb-6 shrink-0 relative z-20">
+        {/* BRAND & LOGO (ArcByte) */}
+        <motion.div 
           onClick={() => onNavigate('onboarding')}
-          className="w-10 h-10 rounded-full border-[1.5px] border-white/10 bg-[#151515]/60 flex items-center justify-center transition-colors mb-8 backdrop-blur-md"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="flex items-center space-x-3 mb-10 cursor-pointer w-max"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          <ChevronLeft className="w-5 h-5 text-white" />
-        </motion.button>
+          <img src={arcbyteLogo} alt="ArcByte Icon" className="h-[28px] w-auto object-contain drop-shadow-md" />
+          <span className="text-white font-[600] text-[22px] tracking-[-0.02em]">ArcByte</span>
+        </motion.div>
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -171,16 +199,16 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
         </AnimatePresence>
       </div>
 
-      {/* BOTTOM CARD */}
+      {/* BOTTOM CARD (Glassmorphic Proton Style) */}
       <motion.div 
         initial={{ y: 200, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, type: 'spring', damping: 25, stiffness: 200 }}
-        className="w-full flex-1 bg-[#161618] border-t border-white/5 rounded-t-[2.5rem] mt-2 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] px-6 pt-6 pb-8 flex flex-col z-30 relative overflow-y-auto no-scrollbar"
+        className="w-full flex-1 bg-[#0A0A0A]/90 backdrop-blur-3xl border-t border-white/10 rounded-t-[2.5rem] shadow-[0_-15px_40px_rgba(0,0,0,0.8)] px-6 pt-6 pb-8 flex flex-col z-30 relative overflow-y-auto no-scrollbar"
       >
         
         {/* Toggle Switch */}
-        <div className="w-full h-[52px] bg-[#0A0A0A] rounded-full p-1 flex border border-white/5 mb-8 shadow-inner shrink-0 relative">
+        <div className="w-full h-[52px] bg-[#050505] rounded-full p-1 flex border border-white/10 mb-8 shadow-inner shrink-0 relative">
           {/* Moving Active Background Pill */}
           <motion.div 
             className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-[#222225] rounded-full shadow-md border border-white/10"

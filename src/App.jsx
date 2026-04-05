@@ -4,6 +4,7 @@ import Dashboard from './screens/Dashboard';
 import Generator from './screens/Generator';
 import Profile from './screens/Profile';
 import Auth from './screens/Auth';
+import Security from './screens/Security';
 import { AnimatePresence } from 'framer-motion';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           {currentScreen === 'dashboard' && <Dashboard key="dashboard" onNavigate={navigate} />}
           {currentScreen === 'generator' && <Generator key="generator" onNavigate={navigate} />}
           {currentScreen === 'profile' && <Profile key="profile" onNavigate={navigate} />}
+          {currentScreen === 'security' && <Security key="security" onNavigate={navigate} />}
         </AnimatePresence>
       </div>
     </div>

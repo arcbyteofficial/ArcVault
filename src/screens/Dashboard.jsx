@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, SlidersHorizontal, Wand2, ChevronRight, Home, Shield, User, Plus, Menu, Link as LinkIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
+import arcbyteLogo from '../assets/arcbyte.co Logo_white_transparent.png';
 
 const Dashboard = ({ onNavigate }) => {
   const [vaultItems, setVaultItems] = useState([]);
@@ -63,17 +64,9 @@ const Dashboard = ({ onNavigate }) => {
 
       {/* TOP NAVIGATION */}
       <div className="flex justify-between items-center w-full px-6 pt-16 z-20 relative">
-        <div className="flex items-center space-x-2">
-          {/* Logo SVG (Proton style block arrow) */}
-          <div className="w-[22px] h-[22px] bg-white rounded-[5px] transform rotate-45 flex items-center justify-center overflow-hidden">
-            <div className="transform -rotate-45 text-black flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="black" strokeWidth="1">
-                 <path d="M5 2 h8 a6 6 0 0 1 6 6 v2 a6 6 0 0 1 -6 6 h-8 z" />
-                 <path d="M10 8 L16 8 L13 14 Z" fill="white" />
-              </svg>
-            </div>
-          </div>
-          <span className="text-white font-semibold text-[18px] tracking-tight">ArcVault</span>
+        <div className="flex items-center space-x-3 cursor-pointer">
+          <img src={arcbyteLogo} alt="ArcByte Icon" className="h-[24px] w-auto object-contain drop-shadow-md" />
+          <span className="text-white font-[600] text-[20px] tracking-[-0.02em]">ArcByte</span>
         </div>
         <button className="w-10 h-10 rounded-full border-[1.5px] border-white/10 bg-[#151515]/60 flex items-center justify-center backdrop-blur-md">
           <Menu className="w-5 h-5 text-white/80 stroke-[1.5]" />
@@ -163,7 +156,7 @@ const Dashboard = ({ onNavigate }) => {
           </button>
           
           {/* Shield */}
-          <button className="w-12 h-12 bg-[#1C1C1E] hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors">
+          <button onClick={() => onNavigate('security')} className="w-12 h-12 bg-[#1C1C1E] hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               <path d="M12 8v4" />

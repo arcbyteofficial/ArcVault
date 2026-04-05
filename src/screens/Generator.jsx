@@ -98,9 +98,13 @@ const Generator = ({ onNavigate }) => {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans"
     >
-      {/* BACKGROUND ELEMENTS */}
-      <div className="absolute top-0 left-0 w-[120%] h-[60%] -translate-x-[10%] bg-[radial-gradient(ellipse_at_top,#2A2A30_0%,transparent_70%)] opacity-70"></div>
-      <div className="absolute top-0 left-0 w-full h-[60%] bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)]"></div>
+      {/* PROTON PASS AESTHETIC BACKGROUND */}
+      <div className="absolute inset-0 bg-[#060606]"></div>
+      <div className="absolute top-[-20%] left-[-20%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.2)_15%,rgba(255,255,255,0.02)_30%,transparent_50%)] pointer-events-none z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-[100%] bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:42px_42px] pointer-events-none [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] z-0"></div>
+      <div className="absolute top-[32%] left-[38%] w-[2px] h-[2px] bg-white rounded-full opacity-80 shadow-[0_0_6px_2px_rgba(255,255,255,0.8)] z-0"></div>
+      <div className="absolute top-[24%] left-[62%] w-[1.5px] h-[1.5px] bg-white rounded-full opacity-60 shadow-[0_0_5px_1px_rgba(255,255,255,0.6)] z-0"></div>
+      <div className="absolute top-[52%] right-[22%] w-[2px] h-[2px] bg-white rounded-full opacity-50 shadow-[0_0_5px_1px_rgba(255,255,255,0.5)] z-0"></div>
 
 
 
@@ -110,7 +114,7 @@ const Generator = ({ onNavigate }) => {
         <div className="flex justify-between items-center mb-8">
           <button 
             onClick={() => onNavigate('dashboard')}
-            className="w-10 h-10 -ml-2 rounded-full border-[1.5px] border-white/10 bg-[#151515]/80 flex items-center justify-center hover:bg-[#252525] transition-colors backdrop-blur-md"
+            className="w-10 h-10 -ml-2 rounded-full border border-white/10 shadow-[0_4px_15px_rgba(0,0,0,0.5)] bg-[#0A0A0A]/60 flex items-center justify-center hover:bg-[#151515]/60 transition-colors backdrop-blur-xl"
           >
             <ChevronLeft className="w-6 h-6 text-white" />
           </button>
@@ -218,8 +222,9 @@ const Generator = ({ onNavigate }) => {
       </div>
 
       {/* Bottom Output Card */}
-      <div className="absolute bottom-0 w-full h-[22%] min-h-[160px] bg-[#161618] border-t border-white/5 rounded-t-[2.5rem] px-8 py-8 items-start flex flex-col justify-center z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
-        <div className="w-full flex justify-between items-center mb-4">
+      <div className="absolute bottom-0 w-full h-[22%] min-h-[160px] bg-[#0A0A0A]/70 backdrop-blur-3xl border-t border-white/10 rounded-t-[2.5rem] px-8 py-8 items-start flex flex-col justify-center z-30 shadow-[0_-15px_40px_rgba(0,0,0,0.8)]">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.03)_0%,transparent_70%)] pointer-events-none rounded-t-[2.5rem]"></div>
+        <div className="w-full flex justify-between items-center mb-4 relative z-10">
           <div className="flex flex-wrap items-center space-x-[2px] font-mono text-[19px] tracking-wider truncate mr-4">
                <AnimatePresence mode="popLayout">
                  {password.split('').map((char, i) => (

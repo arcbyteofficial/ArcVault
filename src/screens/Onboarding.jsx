@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
+import arcbyteLogo from '../assets/arcbyte.co Logo_white_transparent.png';
 
 const Onboarding = ({ onContinue }) => {
   const containerRef = useRef(null);
@@ -28,53 +29,42 @@ const Onboarding = ({ onContinue }) => {
       className="w-full h-full bg-[#0d0d0d] flex flex-col relative overflow-hidden transition-all duration-500 font-sans" 
     >
       {/* BACKGROUND ELEMENTS */}
-      {/* 1. Top Light Radial Glow */}
-      <motion.div 
-        animate={{ opacity: [0.7, 0.9, 0.7] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 left-0 w-full h-[60%] bg-gradient-to-b from-[#999999] via-[#2A2A2A] to-transparent"
-      ></motion.div>
       
-      {/* 2. Grid Overlay (fades out at bottom) */}
-      <motion.div 
-        animate={{ y: [0, -40], opacity: [0.3, 0.6] }}
-        transition={{ duration: 15, repeat: Infinity, repeatType: "mirror", ease: "linear" }}
-        className="absolute top-0 left-0 w-full h-[70%] bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"
-      ></motion.div>
+      {/* 1. Base Dark Background */}
+      <div className="absolute inset-0 bg-[#060606]"></div>
 
-      {/* 3. The Massive Dark Silhouette Shape */}
-      <svg className="absolute right-[-2px] inset-y-1/2 -translate-y-[80%] w-[65%] h-auto max-h-[50%]" viewBox="0 0 200 320" fill="none">
+      {/* 2. Massive Top-Left Radial White Glow */}
+      <div className="absolute top-[-30%] left-[-30%] w-[130%] h-[130%] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.95)_0%,rgba(255,255,255,0.3)_15%,rgba(255,255,255,0.05)_30%,transparent_50%)] pointer-events-none"></div>
+      
+      {/* 3. Intense Background Grid Overlay */}
+      <div className="absolute top-0 left-0 w-full h-[100%] bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:42px_42px] pointer-events-none [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]"></div>
+
+      {/* 4. The Massive Proton Cutout Shape */}
+      <svg className="absolute right-[-4%] top-[18%] w-[85%] h-auto max-h-[60%] drop-shadow-[0_0_25px_rgba(0,0,0,0.8)]" viewBox="0 0 240 340" fill="none">
         <path 
-          d="M 210 -10 L 90 -10 A 30 30 0 0 0 60 20 L 60 70 A 70 70 0 0 1 60 210 L 60 260 A 30 30 0 0 0 90 290 L 210 290 Z" 
-          fill="#1C1C1E" 
-          fillOpacity="0.85" 
-          stroke="rgba(255,255,255,0.08)" 
-          strokeWidth="3" 
+          d="M 260 0 L 100 0 A 40 40 0 0 0 60 40 L 60 70 A 50 50 0 0 1 60 170 L 140 170 L 140 240 L 60 240 A 50 50 0 0 0 110 340 L 260 340 Z" 
+          fill="#0C0C0C" 
+          fillOpacity="0.92" 
+          stroke="rgba(255,255,255,0.04)" 
+          strokeWidth="1.5" 
         />
       </svg>
-      {/* Subtle Dust Particles */}
-      <div className="absolute top-[25%] left-[20%] w-[2px] h-[2px] bg-white rounded-full opacity-60 shadow-[0_0_8px_2px_rgba(255,255,255,0.5)]"></div>
-      <div className="absolute top-[40%] right-[30%] w-[2px] h-[2px] bg-white rounded-full opacity-40 shadow-[0_0_8px_2px_rgba(255,255,255,0.5)]"></div>
-      <div className="absolute top-[15%] right-[10%] w-[3px] h-[3px] bg-white rounded-full opacity-30 shadow-[0_0_8px_2px_rgba(255,255,255,0.5)]"></div>
 
+      {/* 5. Floating Glow Particles */}
+      <div className="absolute top-[32%] left-[38%] w-[2px] h-[2px] bg-white rounded-full opacity-80 shadow-[0_0_6px_2px_rgba(255,255,255,0.8)]"></div>
+      <div className="absolute top-[24%] left-[62%] w-[1.5px] h-[1.5px] bg-white rounded-full opacity-60 shadow-[0_0_5px_1px_rgba(255,255,255,0.6)]"></div>
+      <div className="absolute top-[52%] right-[22%] w-[2px] h-[2px] bg-white rounded-full opacity-50 shadow-[0_0_5px_1px_rgba(255,255,255,0.5)]"></div>
+      <div className="absolute top-[18%] right-[10%] w-[1px] h-[1px] bg-white rounded-full opacity-40 shadow-[0_0_3px_1px_rgba(255,255,255,0.5)]"></div>
 
-
-      {/* BRAND & LOGO */}
+      {/* BRAND & LOGO (ArcByte) */}
       <motion.div 
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="absolute top-[60px] left-6 flex items-center space-x-2 z-20"
+        className="absolute top-[60px] left-8 flex items-center space-x-3 z-20"
       >
-        <div className="w-[22px] h-[22px] bg-white rounded-md transform rotate-45 flex items-center justify-center overflow-hidden">
-          <div className="transform -rotate-45 text-black">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="black" strokeWidth="1">
-               <path d="M5 2 h8 a6 6 0 0 1 6 6 v2 a6 6 0 0 1 -6 6 h-8 z" />
-               <path d="M10 8 L16 8 L13 14 Z" fill="white" />
-            </svg>
-          </div>
-        </div>
-        <span className="text-white font-semibold text-[17px] tracking-tight">ArcVault</span>
+        <img src={arcbyteLogo} alt="ArcByte Icon" className="h-[28px] w-auto object-contain drop-shadow-md" />
+        <span className="text-white font-[600] text-[22px] tracking-[-0.02em]">ArcByte</span>
       </motion.div>
 
       {/* CONTENT BLOCK (Bottom aligned) */}

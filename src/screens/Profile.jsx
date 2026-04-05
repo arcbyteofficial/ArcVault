@@ -52,32 +52,39 @@ const Profile = ({ onNavigate }) => {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans pb-4"
     >
-      {/* BACKGROUND ELEMENTS */}
-      <div className="absolute top-0 left-0 w-[120%] h-[60%] -translate-x-[10%] bg-[radial-gradient(ellipse_at_top,#2A2A30_0%,transparent_70%)] opacity-70 pointer-events-none"></div>
-      <div className="absolute top-0 left-0 w-full h-[60%] bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)] pointer-events-none"></div>
+      {/* PROTON PASS AESTHETIC BACKGROUND */}
+      <div className="absolute inset-0 bg-[#060606]"></div>
+      <div className="absolute top-[-20%] left-[-20%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.2)_15%,rgba(255,255,255,0.02)_30%,transparent_50%)] pointer-events-none z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-[100%] bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:42px_42px] pointer-events-none [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] z-0"></div>
+      <div className="absolute top-[32%] left-[38%] w-[2px] h-[2px] bg-white rounded-full opacity-80 shadow-[0_0_6px_2px_rgba(255,255,255,0.8)] z-0"></div>
+      <div className="absolute top-[24%] left-[62%] w-[1.5px] h-[1.5px] bg-white rounded-full opacity-60 shadow-[0_0_5px_1px_rgba(255,255,255,0.6)] z-0"></div>
+      <div className="absolute top-[52%] right-[22%] w-[2px] h-[2px] bg-white rounded-full opacity-50 shadow-[0_0_5px_1px_rgba(255,255,255,0.5)] z-0"></div>
 
 
       {/* TOP HEADER */}
-      <div className="flex justify-center items-center w-full px-6 pt-16 z-20 relative">
-        <span className="text-white font-[600] text-[18px] tracking-tight">Account</span>
+      <div className="flex justify-center items-center w-full px-6 pt-16 pb-4 z-20 relative">
+        <span className="text-white font-[600] text-[20px] tracking-tight">Account</span>
       </div>
 
       <div className="flex-1 overflow-y-auto px-6 relative z-20 no-scrollbar pb-32">
         {/* PROFILE HEADER CARD */}
-        <div className="w-full mt-6 bg-[#161618] rounded-[2rem] p-6 flex flex-col items-center border border-transparent hover:border-white/5 transition-colors shadow-lg">
-          <div className="w-24 h-24 bg-gradient-to-br from-[#444] to-[#111] rounded-full flex items-center justify-center shadow-[inset_0px_2px_8px_rgba(255,255,255,0.3),0_4px_15px_rgba(0,0,0,0.6)] border border-white/10 mb-4 relative">
+        <div className="w-full bg-[#0A0A0A]/70 backdrop-blur-3xl rounded-[2rem] p-6 flex flex-col items-center border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.8)] relative overflow-hidden">
+          {/* Subtle Accent Glow */}
+          <div className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05)_0%,transparent_40%)] pointer-events-none"></div>
+          
+          <div className="w-24 h-24 bg-gradient-to-br from-[#2A2A2A] to-[#0A0A0A] rounded-full flex items-center justify-center shadow-[inset_0_2px_15px_rgba(255,255,255,0.1),0_8px_30px_rgba(0,0,0,0.8)] border border-white/15 mb-4 relative z-10">
              <span className="text-[34px] font-[600] text-white tracking-widest drop-shadow-md">{getInitials(userData.full_name)}</span>
              {/* Premium Badge */}
              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#1A1A1C] border-[1.5px] border-[#333] rounded-full flex items-center justify-center shadow-lg">
                <Crown className="w-4 h-4 text-white" />
              </div>
           </div>
-          <h2 className="text-white text-[24px] font-[600] tracking-tight">{userData.full_name || 'Anonymous User'}</h2>
-          <p className="text-gray-400 text-[14px] mt-1">{userData.email || 'No email securely stored'}</p>
-          {userData.phone_number && <p className="text-gray-500 text-[13px] font-mono mt-1 mb-4">{userData.phone_number}</p>}
-          {!userData.phone_number && <div className="mb-4"></div>}
+          <h2 className="text-white text-[24px] font-[600] tracking-tight relative z-10">{userData.full_name || 'Anonymous User'}</h2>
+          <p className="text-gray-400 text-[14px] mt-1 relative z-10">{userData.email || 'No email securely stored'}</p>
+          {userData.phone_number && <p className="text-gray-500 text-[13px] font-mono mt-1 mb-4 relative z-10">{userData.phone_number}</p>}
+          {!userData.phone_number && <div className="mb-4 relative z-10"></div>}
           
-          <button className="bg-white/10 hover:bg-white/15 transition-colors text-white text-[14px] font-[500] px-6 py-2.5 rounded-full border border-white/10">
+          <button className="relative z-10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-colors text-white text-[14px] font-[500] px-8 py-3 rounded-full border border-white/10 shadow-lg">
             Edit Profile
           </button>
         </div>
@@ -87,8 +94,8 @@ const Profile = ({ onNavigate }) => {
           
           {/* Security Group */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-gray-400 text-[13px] font-[600] uppercase tracking-wider mb-3 px-2">Security</h3>
-            <div className="w-full bg-[#161618] rounded-[2rem] px-5 py-2">
+            <h3 className="text-gray-500 text-[12px] font-[700] uppercase tracking-widest mb-3 px-4">Security Preferences</h3>
+            <div className="w-full bg-[#0A0A0A]/70 backdrop-blur-3xl rounded-[2rem] px-5 py-2 border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
               
               <div className="flex items-center justify-between py-4 border-b border-white/5 cursor-pointer group">
                 <div className="flex items-center">
@@ -136,8 +143,8 @@ const Profile = ({ onNavigate }) => {
 
           {/* General Group */}
           <motion.div variants={itemVariants}>
-            <h3 className="text-gray-400 text-[13px] font-[600] uppercase tracking-wider mb-3 px-2">General</h3>
-            <div className="w-full bg-[#161618] rounded-[2rem] px-5 py-2">
+            <h3 className="text-gray-500 text-[12px] font-[700] uppercase tracking-widest mb-3 px-4 mt-8">General Preferences</h3>
+            <div className="w-full bg-[#0A0A0A]/70 backdrop-blur-3xl rounded-[2rem] px-5 py-2 border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
               
               <div className="flex items-center justify-between py-4 border-b border-white/5 cursor-pointer group">
                 <div className="flex items-center">
@@ -171,10 +178,10 @@ const Profile = ({ onNavigate }) => {
               localStorage.removeItem('arcvault_token');
               onNavigate('auth');
             }}
-            className="w-full bg-[#161618] hover:bg-[#1A1A1C] transition-colors rounded-[2rem] p-5 flex items-center justify-center border border-white/5 mt-4 group"
+            className="w-full bg-[#0A0A0A]/70 backdrop-blur-3xl shadow-[0_15px_40px_rgba(0,0,0,0.8)] hover:bg-[#111111]/80 transition-colors rounded-[2rem] p-5 flex items-center justify-center border border-white/10 mt-6 group"
           >
-            <LogOut className="w-[18px] h-[18px] text-[#FF453A] group-hover:scale-110 transition-transform" />
-            <span className="ml-3 text-[#FF453A] text-[16px] font-[600]">Sign Out</span>
+            <LogOut className="w-[18px] h-[18px] text-[#FF453A] group-hover:scale-110 transition-transform drop-shadow-sm" />
+            <span className="ml-3 text-[#FF453A] text-[16px] font-[600] tracking-tight">Sign Out</span>
           </motion.button>
 
         </motion.div>
@@ -193,7 +200,7 @@ const Profile = ({ onNavigate }) => {
           </button>
           
           {/* Shield */}
-          <button className="w-12 h-12 bg-[#1C1C1E] hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors">
+          <button onClick={() => onNavigate('security')} className="w-12 h-12 bg-[#1C1C1E] hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               <path d="M12 8v4" />
