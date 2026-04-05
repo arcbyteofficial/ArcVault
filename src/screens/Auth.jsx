@@ -70,17 +70,9 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
       
       {/* PROTON PASS AESTHETIC BACKGROUND */}
       <div className="absolute inset-0 bg-[#060606]"></div>
-      <div className="absolute top-[-30%] left-[-30%] w-[130%] h-[130%] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.95)_0%,rgba(255,255,255,0.3)_15%,rgba(255,255,255,0.05)_30%,transparent_50%)] pointer-events-none z-0"></div>
+
       <div className="absolute top-0 left-0 w-full h-[100%] bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:42px_42px] pointer-events-none [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)] z-0"></div>
-      <svg className="absolute right-[-4%] top-[18%] w-[85%] h-auto max-h-[60%] drop-shadow-[0_0_25px_rgba(0,0,0,0.8)] z-0" viewBox="0 0 240 340" fill="none">
-        <path 
-          d="M 260 0 L 100 0 A 40 40 0 0 0 60 40 L 60 70 A 50 50 0 0 1 60 170 L 140 170 L 140 240 L 60 240 A 50 50 0 0 0 110 340 L 260 340 Z" 
-          fill="#0C0C0C" 
-          fillOpacity="0.92" 
-          stroke="rgba(255,255,255,0.04)" 
-          strokeWidth="1.5" 
-        />
-      </svg>
+
       <div className="absolute top-[32%] left-[38%] w-[2px] h-[2px] bg-white rounded-full opacity-80 shadow-[0_0_6px_2px_rgba(255,255,255,0.8)] z-0"></div>
       <div className="absolute top-[24%] left-[62%] w-[1.5px] h-[1.5px] bg-white rounded-full opacity-60 shadow-[0_0_5px_1px_rgba(255,255,255,0.6)] z-0"></div>
       <div className="absolute top-[52%] right-[22%] w-[2px] h-[2px] bg-white rounded-full opacity-50 shadow-[0_0_5px_1px_rgba(255,255,255,0.5)] z-0"></div>
