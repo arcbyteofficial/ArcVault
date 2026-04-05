@@ -21,7 +21,7 @@ const Generator = ({ onNavigate }) => {
       return;
     }
     
-    const API_URL = import.meta.env.DEV ? 'http://localhost:5000' : 'https://engine.arcbyte.co';
+    const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : 'https://engine.arcbyte.co';
     try {
       const res = await fetch(`${API_URL}/api/vault`, {
         method: 'POST',
