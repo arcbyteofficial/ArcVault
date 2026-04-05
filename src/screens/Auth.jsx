@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, Mail, Lock, Eye, EyeOff, User, Phone, ShieldCheck, Unlock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useGoogleLogin } from '@react-oauth/google';
 import arcbyteLogo from '../assets/arcbyte.co Logo_white_transparent.png';
 
 const Auth = ({ onNavigate, onLoginSuccess }) => {
@@ -22,6 +23,45 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
       setRememberMe(true);
     }
   }, []);
+
+  const handleGoogleSuccess = async (tokenResponse) => {
+    const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : 'https://engine.arcbyte.co';
+    
+    try {
+      const res = await fetch(`${API_URL}/api/auth/google-login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ access_token: tokenResponse.access_token })
+      });
+      const data = await res.json();
+      
+      if (!res.ok) {
+        alert(data.error || 'Google login failed.');
+        return;
+      }
+
+      localStorage.setItem('arcvault_token', data.token);
+      sessionStorage.setItem('arcvault_active_session', 'true');
+      
+      setShowSuccess(true);
+      setTimeout(() => {
+        if (onLoginSuccess) {
+          onLoginSuccess();
+        } else {
+          onNavigate('dashboard');
+        }
+      }, 2000);
+      
+    } catch (err) {
+      console.error(err);
+      alert('Backend connection failed processing Google Login.');
+    }
+  };
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: handleGoogleSuccess,
+    onError: () => alert('Google authentication interruped or failed.')
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -420,7 +460,7 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
           </div>
 
           <div className="flex space-x-4 shrink-0 pb-6">
-            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.95 }} type="button" className="flex-1 h-[52px] rounded-full border border-white/10 bg-[#0A0A0A] flex items-center justify-center shadow-sm space-x-2 relative group hover:bg-[#111] transition-colors">
+            <motion.button onClick={() => loginWithGoogle()} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.95 }} type="button" className="flex-1 h-[52px] rounded-full border border-white/10 bg-[#0A0A0A] flex items-center justify-center shadow-sm space-x-2 relative group hover:bg-[#111] transition-colors">
               <svg className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                 <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />

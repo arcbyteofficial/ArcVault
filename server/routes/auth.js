@@ -55,6 +55,47 @@ router.post('/register', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+// Google Login
+router.post('/google-login', async (req, res) => {
+  const { access_token } = req.body;
+
+  if (!access_token) {
+    return res.status(400).json({ error: 'Google Access Token is required' });
+  }
+
+  try {
+    // 1. Fetch user data from Google with the access token
+    const googleResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+
+    if (!googleResponse.ok) {
+      return res.status(401).json({ error: 'Failed to authenticate with Google' });
+    }
+
+    const googleUser = await googleResponse.json();
+    
+    // 2. We STRICTLY ONLY ALLOW login if the email exists in our db. No random registration.
+    const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [googleUser.email]);
+    const user = userResult.rows[0];
+
+    if (!user) {
+       // Stop the process: Bypassed registration block!
+       return res.status(403).json({ error: 'No matching account found. Please register manually first to link your Google identity.' });
+    }
+
+    // 3. Email found! User exists. Grant access.
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '7d' });
+
+    res.json({ token, user: { id: user.id, email: user.email } });
+
+  } catch (err) {
+    console.error('Google login error:', err.message);
+    res.status(500).send('Server Error processing Google authentication');
+  }
+});
 
 // Login
 router.post('/login', async (req, res) => {
