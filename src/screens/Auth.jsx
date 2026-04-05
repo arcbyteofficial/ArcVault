@@ -477,6 +477,15 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
             </motion.button>
           </div>
           
+          <div className="mt-4 text-center pb-12 flex items-center justify-center space-x-3">
+             <button type="button" onClick={() => onNavigate('privacy')} className="text-[12px] font-medium text-gray-500 hover:text-white transition-colors underline-offset-4 hover:underline">
+               Privacy Policy
+             </button>
+             <span className="text-gray-700 text-[10px]">●</span>
+             <button type="button" onClick={() => onNavigate('terms')} className="text-[12px] font-medium text-gray-500 hover:text-white transition-colors underline-offset-4 hover:underline">
+               Terms of Service
+             </button>
+          </div>
         </form>
       </motion.div>
     </motion.div>

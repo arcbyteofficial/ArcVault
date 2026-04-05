@@ -54,7 +54,7 @@ const Profile = ({ onNavigate }) => {
       className="w-full h-full bg-[#080808] flex flex-col relative overflow-hidden font-sans pb-4"
     >
       {/* GRID OVERLAY BACKGROUND (Matches mock background lines) */}
-      <div className="absolute top-0 left-0 w-full h-[100%] bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none [mask-image:radial-gradient(ellipse_at_top,black_40%,transparent_100%)] z-0"></div>
+
 
       {/* TOP HEADER */}
       <div className="flex justify-between items-center w-full px-5 pt-16 pb-4 z-20 relative">

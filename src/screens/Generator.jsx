@@ -100,7 +100,7 @@ const Generator = ({ onNavigate }) => {
     >
       {/* BACKGROUND ELEMENTS */}
       <div className="absolute top-0 left-0 w-[120%] h-[60%] -translate-x-[10%] bg-[radial-gradient(ellipse_at_top,#2A2A30_0%,transparent_70%)] opacity-70"></div>
-      <div className="absolute top-0 left-0 w-full h-[60%] bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)]"></div>
+
 
 
 

@@ -6,12 +6,18 @@ import Profile from './screens/Profile';
 import Auth from './screens/Auth';
 import Security from './screens/Security';
 import ResetPassword from './screens/ResetPassword';
+import PrivacyPolicy from './screens/PrivacyPolicy';
+import TermsOfService from './screens/TermsOfService';
 import { AnimatePresence } from 'framer-motion';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(() => {
     // Intercept URL token parameters
     const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('privacy') === 'true') return 'privacy';
+    if (urlParams.get('terms') === 'true') return 'terms';
+    
     const resetToken = urlParams.get('resetToken');
     if (resetToken) return 'reset';
 
@@ -59,6 +65,8 @@ function App() {
           {currentScreen === 'generator' && <Generator key="generator" onNavigate={navigate} />}
           {currentScreen === 'profile' && <Profile key="profile" onNavigate={navigate} />}
           {currentScreen === 'security' && <Security key="security" onNavigate={navigate} />}
+          {currentScreen === 'privacy' && <PrivacyPolicy key="privacy" onNavigate={navigate} />}
+          {currentScreen === 'terms' && <TermsOfService key="terms" onNavigate={navigate} />}
         </AnimatePresence>
       </div>
     </div>

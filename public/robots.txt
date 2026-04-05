@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /api/
+Disallow: /server/
+Disallow: /?resetToken=*
+Allow: /
+
+Sitemap: https://vault.arcbyte.co/sitemap.xml

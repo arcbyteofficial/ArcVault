@@ -26,7 +26,7 @@ const Security = ({ onNavigate }) => {
       
       {/* Heavy Top Center Spotlight matches the notch glow in screenshot */}
       <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[50%] bg-[radial-gradient(ellipse_at_top_center,rgba(255,255,255,0.25)_0%,rgba(255,255,255,0.05)_40%,transparent_70%)] pointer-events-none z-0"></div>
-      <div className="absolute top-0 left-0 w-full h-[100%] bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:42px_42px] pointer-events-none [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] z-0"></div>
+
       
       <div className="absolute top-[32%] left-[38%] w-[2px] h-[2px] bg-white rounded-full opacity-80 shadow-[0_0_6px_2px_rgba(255,255,255,0.8)] z-0"></div>
       <div className="absolute top-[24%] left-[62%] w-[1.5px] h-[1.5px] bg-white rounded-full opacity-60 shadow-[0_0_5px_1px_rgba(255,255,255,0.6)] z-0"></div>
