@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Onboarding from './screens/Onboarding';
 import Dashboard from './screens/Dashboard';
 import Generator from './screens/Generator';
@@ -29,8 +29,27 @@ function App() {
     setCurrentScreen(screen);
   };
 
+  useEffect(() => {
+    let color = '#0A0A0A'; // Dashboard, Onboarding, Generator, Reset Password
+    if (currentScreen === 'auth' || currentScreen === 'security') {
+      color = '#060606';
+    } else if (currentScreen === 'profile') {
+      color = '#080808';
+    }
+    
+    // Push Native Hardware Status Bar Color updates (Chrome / Safari)
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.setAttribute('content', color);
+    
+    // Override Body/Overscroll background bleeding
+    document.body.style.backgroundColor = color;
+  }, [currentScreen]);
+
   return (
-    <div className="w-full h-[100dvh] bg-[#0A0A0A] sm:max-w-[400px] sm:max-h-[850px] sm:rounded-[3rem] sm:border-[8px] sm:border-[#111] overflow-hidden relative flex flex-col font-sans sm:my-auto sm:shadow-2xl shadow-none">
+    <div 
+      className="w-full h-[100dvh] sm:max-w-[400px] sm:max-h-[850px] sm:rounded-[3rem] sm:border-[8px] sm:border-[#111] overflow-hidden relative flex flex-col font-sans sm:my-auto sm:shadow-2xl shadow-none transition-colors duration-500"
+      style={{ backgroundColor: currentScreen === 'auth' || currentScreen === 'security' ? '#060606' : currentScreen === 'profile' ? '#080808' : '#0A0A0A' }}
+    >
       <div className="flex-1 overflow-hidden relative">
         <AnimatePresence mode="wait">
           {currentScreen === 'onboarding' && <Onboarding key="onboarding" onContinue={() => navigate('auth')} />}
