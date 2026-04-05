@@ -4,6 +4,36 @@ import { motion } from 'framer-motion';
 
 const Profile = ({ onNavigate }) => {
   const [faceIdEnabled, setFaceIdEnabled] = useState(true);
+  const [userData, setUserData] = useState({ full_name: '', email: '', phone_number: '' });
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('arcvault_token');
+      if (!token) return;
+      try {
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${API_URL}/api/auth/me`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setUserData(data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const getInitials = (name) => {
+    if (!name) return 'ME';
+    const split = name.split(' ');
+    if (split.length > 1) {
+       return (split[0][0] + split[1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -58,14 +88,16 @@ const Profile = ({ onNavigate }) => {
         {/* PROFILE HEADER CARD */}
         <div className="w-full mt-6 bg-[#161618] rounded-[2rem] p-6 flex flex-col items-center border border-transparent hover:border-white/5 transition-colors shadow-lg">
           <div className="w-24 h-24 bg-gradient-to-br from-[#444] to-[#111] rounded-full flex items-center justify-center shadow-[inset_0px_2px_8px_rgba(255,255,255,0.3),0_4px_15px_rgba(0,0,0,0.6)] border border-white/10 mb-4 relative">
-             <span className="text-[34px] font-[600] text-white tracking-widest drop-shadow-md">AB</span>
+             <span className="text-[34px] font-[600] text-white tracking-widest drop-shadow-md">{getInitials(userData.full_name)}</span>
              {/* Premium Badge */}
              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#1A1A1C] border-[1.5px] border-[#333] rounded-full flex items-center justify-center shadow-lg">
                <Crown className="w-4 h-4 text-white" />
              </div>
           </div>
-          <h2 className="text-white text-[24px] font-[600] tracking-tight">Arc Byte</h2>
-          <p className="text-gray-400 text-[14px] mt-1 mb-4">admin@arcbyte.com</p>
+          <h2 className="text-white text-[24px] font-[600] tracking-tight">{userData.full_name || 'Anonymous User'}</h2>
+          <p className="text-gray-400 text-[14px] mt-1">{userData.email || 'No email securely stored'}</p>
+          {userData.phone_number && <p className="text-gray-500 text-[13px] font-mono mt-1 mb-4">{userData.phone_number}</p>}
+          {!userData.phone_number && <div className="mb-4"></div>}
           
           <button className="bg-white/10 hover:bg-white/15 transition-colors text-white text-[14px] font-[500] px-6 py-2.5 rounded-full border border-white/10">
             Edit Profile

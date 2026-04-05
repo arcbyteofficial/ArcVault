@@ -33,7 +33,12 @@ const initializeDB = async () => {
   try {
     await pool.query(usersTable);
     await pool.query(vaultTable);
-    console.log('Database tables verified.');
+    
+    // Add new columns if they do not already exist (migration sync)
+    await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS full_name VARCHAR(255)`);
+    await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone_number VARCHAR(50)`);
+
+    console.log('Database tables verified and migrated.');
   } catch (err) {
     console.error('Error initializing database tables:', err);
   }

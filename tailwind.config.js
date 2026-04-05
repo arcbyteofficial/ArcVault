@@ -12,7 +12,7 @@ export default {
         card: '#F2F2F2', // Light grey / off-white
       },
       fontFamily: {
-        sans: ['Space Grotesk', 'Inter', 'sans-serif'],
+        sans: ['Outfit', 'Inter', 'sans-serif'],
       },
       borderRadius: {
         'xl': '1rem',
