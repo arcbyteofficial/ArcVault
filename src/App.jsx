@@ -8,7 +8,16 @@ import Security from './screens/Security';
 import { AnimatePresence } from 'framer-motion';
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState('onboarding');
+  const [currentScreen, setCurrentScreen] = useState(() => {
+    const hasToken = localStorage.getItem('arcvault_token');
+    const isRemembered = localStorage.getItem('arcvault_remembered_email');
+    const hasActiveSession = sessionStorage.getItem('arcvault_active_session');
+
+    if (hasToken && (isRemembered || hasActiveSession)) {
+      return 'dashboard';
+    }
+    return 'onboarding';
+  });
 
   const navigate = (screen) => {
     setCurrentScreen(screen);

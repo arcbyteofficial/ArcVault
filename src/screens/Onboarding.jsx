@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import arcbyteLogo from '../assets/arcbyte.co Logo_white_transparent.png';
+import onboardingImg from '../assets/onboarding-img.png';
 
 const Onboarding = ({ onContinue }) => {
   const containerRef = useRef(null);
@@ -18,6 +19,8 @@ const Onboarding = ({ onContinue }) => {
     if (info.offset.x > 180) {
       setIsUnlocked(true);
       setTimeout(() => onContinue(), 200);
+    } else {
+      animate(x, 0, { type: "spring", stiffness: 400, damping: 25 });
     }
   };
   return (
@@ -55,6 +58,16 @@ const Onboarding = ({ onContinue }) => {
       >
         <img src={arcbyteLogo} alt="ArcByte Icon" className="h-[28px] w-auto object-contain drop-shadow-md" />
         <span className="text-white font-[600] text-[22px] tracking-[-0.02em]">ArcByte</span>
+      </motion.div>
+
+      {/* CENTRAL ARTWORK */}
+      <motion.div 
+        initial={{ y: 20, opacity: 0, scale: 0.95 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        transition={{ delay: 0.25, duration: 0.8, ease: "easeOut" }}
+        className="absolute top-[22%] left-0 w-full flex items-center justify-center px-8 pointer-events-none z-10"
+      >
+        <img src={onboardingImg} alt="Onboarding Security Graphic" className="w-full max-w-[280px] h-auto object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.6)]" />
       </motion.div>
 
       {/* CONTENT BLOCK (Bottom aligned) */}
