@@ -26,7 +26,7 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const API_URL = import.meta.env.DEV ? 'http://localhost:5000' : 'https://engine.arcbyte.co';
     
     if (isForgot) {
       if (!email) return alert('Email required to send reset link.');

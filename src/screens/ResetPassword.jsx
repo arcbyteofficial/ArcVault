@@ -26,7 +26,7 @@ const ResetPassword = ({ onNavigate }) => {
     }
 
     setIsSubmitting(true);
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const API_URL = import.meta.env.DEV ? 'http://localhost:5000' : 'https://engine.arcbyte.co';
     
     try {
       const res = await fetch(`${API_URL}/api/auth/reset-password`, {
@@ -58,7 +58,7 @@ const ResetPassword = ({ onNavigate }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 1.02 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full h-full bg-[#060606] flex flex-col relative overflow-hidden font-sans"
+      className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans"
     >
       {/* SUCCESS OVERLAY */}
       <AnimatePresence>
@@ -68,7 +68,7 @@ const ResetPassword = ({ onNavigate }) => {
             animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.5 }}
-            className="absolute inset-0 z-[100] bg-[#060606]/80 flex flex-col items-center justify-center overflow-hidden"
+            className="absolute inset-0 z-[100] bg-[#0A0A0A]/80 flex flex-col items-center justify-center overflow-hidden"
           >
             <motion.div 
               initial={{ scale: 0.8, opacity: 0, y: 20 }}

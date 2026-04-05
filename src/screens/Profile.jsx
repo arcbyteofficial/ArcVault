@@ -12,7 +12,7 @@ const Profile = ({ onNavigate }) => {
       const token = localStorage.getItem('arcvault_token');
       if (!token) return;
       try {
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const API_URL = import.meta.env.DEV ? 'http://localhost:5000' : 'https://engine.arcbyte.co';
         const res = await fetch(`${API_URL}/api/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });

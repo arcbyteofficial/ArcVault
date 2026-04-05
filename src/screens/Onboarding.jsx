@@ -29,12 +29,12 @@ const Onboarding = ({ onContinue }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 1.02 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full h-full bg-[#0d0d0d] flex flex-col relative overflow-hidden transition-all duration-500 font-sans" 
+      className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden transition-all duration-500 font-sans" 
     >
       {/* BACKGROUND ELEMENTS */}
       
       {/* 1. Base Dark Background */}
-      <div className="absolute inset-0 bg-[#060606]"></div>
+      <div className="absolute inset-0 bg-[#0A0A0A]"></div>
 
       {/* 2. Massive Top-Left Radial White Glow */}
 
@@ -140,8 +140,7 @@ const Onboarding = ({ onContinue }) => {
         </motion.div>
       </div>
 
-      {/* iOS Home Indicator */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[130px] h-[4px] bg-white/30 rounded-full z-50"></div>
+
     </motion.div>
   );
 };
