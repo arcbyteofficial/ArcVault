@@ -5,10 +5,16 @@ import Generator from './screens/Generator';
 import Profile from './screens/Profile';
 import Auth from './screens/Auth';
 import Security from './screens/Security';
+import ResetPassword from './screens/ResetPassword';
 import { AnimatePresence } from 'framer-motion';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState(() => {
+    // Intercept URL token parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const resetToken = urlParams.get('resetToken');
+    if (resetToken) return 'reset';
+
     const hasToken = localStorage.getItem('arcvault_token');
     const isRemembered = localStorage.getItem('arcvault_remembered_email');
     const hasActiveSession = sessionStorage.getItem('arcvault_active_session');
@@ -29,6 +35,7 @@ function App() {
         <AnimatePresence mode="wait">
           {currentScreen === 'onboarding' && <Onboarding key="onboarding" onContinue={() => navigate('auth')} />}
           {currentScreen === 'auth' && <Auth key="auth" onNavigate={navigate} />}
+          {currentScreen === 'reset' && <ResetPassword key="reset" onNavigate={navigate} />}
           {currentScreen === 'dashboard' && <Dashboard key="dashboard" onNavigate={navigate} />}
           {currentScreen === 'generator' && <Generator key="generator" onNavigate={navigate} />}
           {currentScreen === 'profile' && <Profile key="profile" onNavigate={navigate} />}

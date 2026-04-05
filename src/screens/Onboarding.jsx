@@ -40,7 +40,6 @@ const Onboarding = ({ onContinue }) => {
 
       
       {/* 3. Intense Background Grid Overlay */}
-      <div className="absolute top-0 left-0 w-full h-[100%] bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:42px_42px] pointer-events-none [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]"></div>
 
 
       {/* 5. Floating Glow Particles */}

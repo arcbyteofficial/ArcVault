@@ -37,6 +37,8 @@ const initializeDB = async () => {
     // Add new columns if they do not already exist (migration sync)
     await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS full_name VARCHAR(255)`);
     await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone_number VARCHAR(50)`);
+    await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_password_token VARCHAR(255)`);
+    await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_password_expires TIMESTAMP`);
 
     console.log('Database tables verified and migrated.');
   } catch (err) {

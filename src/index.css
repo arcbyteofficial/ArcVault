@@ -32,7 +32,7 @@ input:-webkit-autofill:active{
 
 /* Ensure the app is centered and looks like mobile app */
 #root {
-  @apply min-h-screen flex items-center justify-center;
+  @apply min-h-[100dvh] flex sm:items-center sm:justify-center items-start justify-start w-full;
 }
 
 /* Custom Clip Paths for Onboarding Artwork */

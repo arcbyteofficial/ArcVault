@@ -12,6 +12,8 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [isForgot, setIsForgot] = useState(false);
+  const [forgotSubmitting, setForgotSubmitting] = useState(false);
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('arcvault_remembered_email');
@@ -25,6 +27,26 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
     e.preventDefault();
     
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    
+    if (isForgot) {
+      if (!email) return alert('Email required to send reset link.');
+      setForgotSubmitting(true);
+      try {
+        const res = await fetch(`${API_URL}/api/auth/forgot-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        alert(data.message || data.error);
+        if (res.ok) setIsForgot(false);
+      } catch (err) {
+        alert('Backend connection failed sending recovery pin.');
+      }
+      setForgotSubmitting(false);
+      return;
+    }
+
     const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
     const payload = isLogin ? { email, password } : { email, password, fullName, phoneNumber };
 
@@ -176,17 +198,17 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
 
         <AnimatePresence mode="wait">
           <motion.div
-            key={isLogin ? 'login' : 'register'}
+            key={isForgot ? 'forgot' : (isLogin ? 'login' : 'register')}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
             transition={{ duration: 0.3 }}
           >
             <h1 className="text-[34px] font-[600] text-white leading-[1.1] tracking-tight mb-2">
-              {isLogin ? "Welcome back\nto your vault" : "Go ahead and set up\nyour account"}
+              {isForgot ? "Reset your\npassword" : (isLogin ? "Welcome back\nto your vault" : "Go ahead and set up\nyour account")}
             </h1>
             <p className="text-[14px] text-gray-400 font-medium tracking-tight">
-              {isLogin ? "Sign in to enjoy the best managing experience" : "Sign up to enjoy the best managing experience"}
+              {isForgot ? "Enter your email to receive a recovery link" : (isLogin ? "Sign in to enjoy the best managing experience" : "Sign up to enjoy the best managing experience")}
             </p>
           </motion.div>
         </AnimatePresence>
@@ -211,14 +233,14 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
 
           <button 
             type="button"
-            onClick={() => setIsLogin(true)}
+            onClick={() => { setIsLogin(true); setIsForgot(false); }}
             className={`flex-1 rounded-full flex items-center justify-center text-[15px] font-[600] z-10 transition-colors ${isLogin ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
           >
             Login
           </button>
           <button 
             type="button"
-            onClick={() => setIsLogin(false)}
+            onClick={() => { setIsLogin(false); setIsForgot(false); }}
             className={`flex-1 rounded-full flex items-center justify-center text-[15px] font-[600] z-10 transition-colors ${!isLogin ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
           >
             Register
@@ -299,8 +321,16 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
             </motion.div>
 
             {/* Password Input Block */}
-            <motion.div 
-              whileTap={{ scale: 0.98 }}
+            <AnimatePresence>
+              {!isForgot && (
+                <motion.div 
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="w-full mt-4 overflow-hidden"
+                >
+                  <motion.div 
+                    whileTap={{ scale: 0.98 }}
               className="w-full h-[76px] rounded-full border border-white/10 bg-[#0A0A0A] flex items-center px-6 focus-within:border-white/30 transition-colors shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
             >
               <Lock className="w-6 h-6 text-gray-500 shrink-0" strokeWidth={1.5} />
@@ -325,8 +355,11 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
                 ) : (
                   <Eye className="w-5 h-5 text-gray-500 hover:text-white transition-colors" />
                 )}
-              </button>
-            </motion.div>
+                  </button>
+                </motion.div>
+              </motion.div>
+            )}
+            </AnimatePresence>
           </div>
 
           <div className="flex justify-between items-center mb-8 px-1">
@@ -344,8 +377,8 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
               </div>
               <span className="ml-2 text-[13px] font-[600] text-white select-none">Remember me</span>
             </label>
-            <button type="button" className="text-[13px] font-[600] text-white hover:underline">
-              Forgot Password?
+            <button type="button" onClick={() => setIsForgot(!isForgot)} className="text-[13px] font-[600] text-white hover:underline">
+              {isForgot ? "Back to Login" : "Forgot Password?"}
             </button>
           </div>
 
@@ -357,14 +390,16 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
           >
             <AnimatePresence mode="wait">
               <motion.div
-                key={isLogin ? 'btn-login' : 'btn-register'}
+                key={isForgot ? 'btn-forgot' : (isLogin ? 'btn-login' : 'btn-register')}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
                 className="flex items-center justify-center space-x-2"
               >
-                {isLogin ? (
+                {isForgot ? (
+                  <span>{forgotSubmitting ? 'Sending Link...' : 'Send Reset Link'}</span>
+                ) : isLogin ? (
                   <>
                     <ShieldCheck className="w-5 h-5 text-black stroke-[2.5]" />
                     <span>Secure Login</span>
