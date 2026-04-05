@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ChevronLeft, Mail, Lock, Eye, EyeOff, User, Phone, ShieldCheck } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronLeft, Mail, Lock, Eye, EyeOff, User, Phone, ShieldCheck, Unlock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Auth = ({ onNavigate, onLoginSuccess }) => {
@@ -9,6 +9,16 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('arcvault_remembered_email');
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,18 +36,22 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
 
       const data = await res.json();
       
-      if (!res.ok) {
-        alert(data.error || 'Authentication failed');
-        return;
-      }
-
       localStorage.setItem('arcvault_token', data.token);
 
-      if (onLoginSuccess) {
-        onLoginSuccess();
+      if (rememberMe) {
+        localStorage.setItem('arcvault_remembered_email', email);
       } else {
-        onNavigate('dashboard');
+        localStorage.removeItem('arcvault_remembered_email');
       }
+
+      setShowSuccess(true);
+      setTimeout(() => {
+        if (onLoginSuccess) {
+          onLoginSuccess();
+        } else {
+          onNavigate('dashboard');
+        }
+      }, 2000);
     } catch (err) {
       console.error(err);
       alert('Backend connection failed. Please ensure the server is running or check your network connection.');
@@ -53,6 +67,78 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
       className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans"
     >
       
+      {/* SUCCESS OVERLAY */}
+      <AnimatePresence>
+        {showSuccess && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="absolute inset-0 z-[100] bg-[#0A0A0A] flex flex-col items-center justify-center overflow-hidden"
+          >
+            {/* Radial Glow Map */}
+            <motion.div 
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="absolute w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08)_0%,transparent_60%)] pointer-events-none"
+            />
+
+            <motion.div 
+              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, type: 'spring', damping: 20, stiffness: 300 }}
+              className="flex flex-col items-center relative z-10"
+            >
+              <div className="w-24 h-24 rounded-full border border-white/10 bg-[#161618] shadow-[inset_0_2px_15px_rgba(255,255,255,0.05),0_10px_40px_rgba(0,0,0,0.8)] mb-8 flex items-center justify-center relative">
+                 {/* Lock Morph Sequence */}
+                 <motion.div
+                   initial={{ rotateY: 0 }}
+                   animate={{ rotateY: 180 }}
+                   transition={{ duration: 0.6, delay: 0.5, ease: "easeInOut" }}
+                   className="relative w-10 h-10 flex items-center justify-center [transform-style:preserve-3d]"
+                 >
+                   <motion.div 
+                     initial={{ opacity: 1 }}
+                     animate={{ opacity: 0 }}
+                     transition={{ delay: 0.8, duration: 0.1 }}
+                     className="absolute inset-0 flex items-center justify-center [backface-visibility:hidden]"
+                   >
+                     <Lock className="w-8 h-8 text-white/50" strokeWidth={1.5} />
+                   </motion.div>
+                   <motion.div
+                     initial={{ opacity: 0 }}
+                     animate={{ opacity: 1 }}
+                     transition={{ delay: 0.8, duration: 0.1 }}
+                     className="absolute inset-0 flex items-center justify-center [transform:rotateY(180deg)] [backface-visibility:hidden]"
+                   >
+                     <Unlock className="w-8 h-8 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" strokeWidth={2} />
+                   </motion.div>
+                 </motion.div>
+              </div>
+
+              <motion.h2 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.4 }}
+                className="text-[26px] font-[600] text-white tracking-tight mb-2"
+              >
+                {isLogin ? "Vault Unlocked" : "Vault Secured"}
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.1, duration: 0.4 }}
+                className="text-[15px] text-gray-400 tracking-wide font-medium"
+              >
+                {isLogin ? "Connection established securely" : "Encryption keys initialized"}
+              </motion.p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Dynamic Island Top Padding Space */}
       <div className="w-full h-12 shrink-0 relative z-50"></div>
 
@@ -223,11 +309,19 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
           </div>
 
           <div className="flex justify-between items-center mb-8 px-1">
-            <label className="flex items-center cursor-pointer group">
-              <div className="w-[18px] h-[18px] rounded-[4px] border-[1.5px] border-gray-600 group-hover:border-white/50 bg-[#0A0A0A] flex items-center justify-center transition-colors">
-                <svg className="w-3 h-3 text-transparent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+            <label className="flex items-center cursor-pointer group" onClick={() => setRememberMe(!rememberMe)}>
+              <div className={`w-[18px] h-[18px] rounded-[4px] border-[1.5px] flex items-center justify-center transition-colors ${rememberMe ? 'bg-white border-white' : 'border-gray-600 group-hover:border-white/50 bg-[#0A0A0A]'}`}>
+                <motion.svg 
+                  initial={false}
+                  animate={{ scale: rememberMe ? 1 : 0, opacity: rememberMe ? 1 : 0 }}
+                  transition={{ duration: 0.2, type: 'spring', stiffness: 500, damping: 30 }}
+                  className={`w-3 h-3 ${rememberMe ? 'text-black' : 'text-transparent'}`} 
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </motion.svg>
               </div>
-              <span className="ml-2 text-[13px] font-[600] text-white">Remember me</span>
+              <span className="ml-2 text-[13px] font-[600] text-white select-none">Remember me</span>
             </label>
             <button type="button" className="text-[13px] font-[600] text-white hover:underline">
               Forgot Password?

@@ -7,7 +7,7 @@ import Auth from './screens/Auth';
 import { AnimatePresence } from 'framer-motion';
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState('auth');
+  const [currentScreen, setCurrentScreen] = useState('onboarding');
 
   const navigate = (screen) => {
     setCurrentScreen(screen);

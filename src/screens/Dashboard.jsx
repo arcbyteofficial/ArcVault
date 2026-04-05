@@ -61,35 +61,6 @@ const Dashboard = ({ onNavigate }) => {
       {/* 2. Grid Overlay (fades out at bottom) */}
       <div className="absolute top-0 left-0 w-full h-[60%] bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)]"></div>
 
-      {/* TOP STATUS BAR (Dynamic Island) */}
-      <div className="w-full h-12 flex justify-between items-center px-6 pt-2 z-50 text-white font-[600] text-[13px] absolute top-0 pointer-events-none">
-        <span className="tracking-tight mt-1">9:41</span>
-        
-        {/* Dynamic Island */}
-        <div className="w-[110px] h-[32px] bg-black rounded-full absolute left-1/2 -translate-x-1/2 mt-1 shadow-sm"></div>
-
-        <div className="flex items-center space-x-1.5 opacity-90 mt-1">
-           {/* Cellular */}
-           <svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor">
-              <rect x="0" y="6" width="2.5" height="4" rx="0.5" />
-              <rect x="4" y="4" width="2.5" height="6" rx="0.5" />
-              <rect x="8" y="2" width="2.5" height="8" rx="0.5" />
-              <rect x="12" y="0" width="2.5" height="10" rx="0.5" />
-           </svg>
-           {/* WiFi */}
-           <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor">
-              <path d="M7 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-              <path d="M3.5 6.5a5 5 0 0 1 7 0 .5.5 0 0 1-.7.7 4 4 0 0 0-5.6 0 .5.5 0 0 1-.7-.7z"/>
-              <path d="M1 4a8.5 8.5 0 0 1 12 0 .5.5 0 0 1-.7.7 7.5 7.5 0 0 0-10.6 0A.5.5 0 0 1 1 4z"/>
-           </svg>
-           {/* Battery */}
-           <div className="w-[22px] h-[11px] border border-white/40 rounded-[4px] p-[1.5px] flex relative ml-0.5">
-             <div className="h-full w-full bg-[#34C759] rounded-[2px]"></div>
-             <div className="absolute right-[-2.5px] top-[3px] w-[2px] h-[3px] bg-white/40 rounded-r-full"></div>
-           </div>
-        </div>
-      </div>
-
       {/* TOP NAVIGATION */}
       <div className="flex justify-between items-center w-full px-6 pt-16 z-20 relative">
         <div className="flex items-center space-x-2">

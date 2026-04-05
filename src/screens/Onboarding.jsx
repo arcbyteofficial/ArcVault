@@ -1,7 +1,24 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 
 const Onboarding = ({ onContinue }) => {
+  const containerRef = useRef(null);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  
+  const x = useMotionValue(0);
+  // Track width (~320px) minux thumb width (~56px). Let's say drag limit is ~260px.
+  // We'll calculate it using the ref, or just set a max constraint visually.
+  const backgroundOpacity = useTransform(x, [0, 200], [0, 1]);
+  const textOpacity = useTransform(x, [0, 100], [1, 0]);
+
+  const handleDragEnd = (e, info) => {
+    // If it's dragged past a certain threshold (e.g. 200px), trigger continue
+    if (info.offset.x > 180) {
+      setIsUnlocked(true);
+      setTimeout(() => onContinue(), 200);
+    }
+  };
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.98 }}
@@ -88,18 +105,47 @@ const Onboarding = ({ onContinue }) => {
           </p>
         </motion.div>
 
-        {/* Action Button */}
-        <motion.button 
+        {/* Slider Action Button */}
+        <motion.div 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5 }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.96 }}
-          onClick={onContinue}
-          className="w-full h-14 rounded-full bg-gradient-to-b from-[#FFFFFF] to-[#B3B3B3] flex items-center justify-center text-black font-semibold text-[17px] shadow-[inset_0_2px_4px_rgba(255,255,255,1),inset_0_-4px_8px_rgba(0,0,0,0.2),0_4px_12px_rgba(0,0,0,0.5)] transition-all z-10"
+          className="relative w-full h-[68px] rounded-full bg-[#111111] border border-white/5 flex items-center justify-start p-1.5 overflow-hidden shadow-[inset_0_4px_10px_rgba(0,0,0,1)] z-10"
+          ref={containerRef}
         >
-          Get Started
-        </motion.button>
+          {/* Dynamic Progress Background */}
+          <motion.div 
+            className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-white/10 to-transparent pointer-events-none"
+            style={{ width: x, opacity: backgroundOpacity }}
+          />
+
+          {/* Placeholder Text */}
+          <motion.div 
+            style={{ opacity: textOpacity }}
+            className="absolute inset-0 flex items-center justify-center pointer-events-none pl-6"
+          >
+            <span className="text-[13px] font-[700] text-gray-300 tracking-[0.2em] drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">SLIDE TO START</span>
+            <div className="flex space-x-1 ml-4 opacity-50">
+              <ChevronRight className="w-4 h-4 text-gray-500 animate-pulse" />
+              <ChevronRight className="w-4 h-4 text-gray-400 animate-pulse delay-75" />
+              <ChevronRight className="w-4 h-4 text-gray-300 animate-pulse delay-150" />
+            </div>
+          </motion.div>
+
+          {/* Draggable Thumb */}
+          <motion.div
+            drag="x"
+            dragConstraints={containerRef}
+            dragElastic={0.05}
+            dragMomentum={false}
+            onDragEnd={handleDragEnd}
+            style={{ x }}
+            whileTap={{ scale: 0.95 }}
+            className={`w-[56px] h-[56px] rounded-full flex items-center justify-center shrink-0 cursor-grab active:cursor-grabbing z-20 shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),0_4px_12px_rgba(0,0,0,0.8)] border ${isUnlocked ? 'bg-gradient-to-b from-[#34C759] to-[#28A745] text-white border-transparent drop-shadow-[0_0_15px_rgba(52,199,89,0.5)]' : 'bg-gradient-to-b from-[#FFFFFF] to-[#E6E6E6] text-black border-white/20'}`}
+          >
+            <ChevronRight className="w-7 h-7 stroke-[2.5]" />
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* iOS Home Indicator */}

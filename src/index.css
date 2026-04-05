@@ -20,6 +20,16 @@
   scrollbar-width: none;
 }
 
+/* Hardcode Safari/Chrome Autofill to match our dark theme perfectly */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 50px #0A0A0A inset !important;
+    -webkit-text-fill-color: white !important;
+    caret-color: white !important;
+}
+
 /* Ensure the app is centered and looks like mobile app */
 #root {
   @apply min-h-screen flex items-center justify-center;
