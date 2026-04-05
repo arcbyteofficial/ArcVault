@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, Home, Plus, ShieldAlert, Lock, Fingerprint, MoreHorizontal, User, Shield } from 'lucide-react';
+import SEO from '../components/SEO';
 import arcbyteLogo from '../assets/arcbyte.co Logo_white_transparent.png';
 
 const Security = ({ onNavigate }) => {
@@ -21,6 +22,7 @@ const Security = ({ onNavigate }) => {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="w-full h-full bg-[#060606] flex flex-col relative overflow-hidden font-sans pb-4"
     >
+      <SEO title="ArcVault | Security Center" />
       {/* PROTON PASS AESTHETIC BACKGROUND */}
       <div className="absolute inset-0 bg-[#060606]"></div>
       
@@ -149,6 +151,7 @@ const Security = ({ onNavigate }) => {
         <div className="flex items-center space-x-2 mr-2 pr-2 border-r border-white/10">
           {/* Home */}
           <button 
+            aria-label="Dashboard"
             onClick={() => onNavigate('dashboard')}
             className="w-12 h-12 bg-[#1C1C1E] hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors"
           >
@@ -156,13 +159,14 @@ const Security = ({ onNavigate }) => {
           </button>
           
           {/* Security (Active) */}
-          <button className="w-12 h-12 bg-[#D1D1D1] rounded-full flex items-center justify-center shadow-[inset_0_-2px_4px_rgba(0,0,0,0.1),0_0_15px_rgba(255,255,255,0.15)] relative">
+          <button aria-label="Security Center" className="w-12 h-12 bg-[#D1D1D1] rounded-full flex items-center justify-center shadow-[inset_0_-2px_4px_rgba(0,0,0,0.1),0_0_15px_rgba(255,255,255,0.15)] relative">
             <Shield className="w-[20px] h-[20px] text-black stroke-[2] fill-black/10" />
             <div className="absolute w-1.5 h-1.5 bg-black rounded-full bottom-2"></div>
           </button>
           
           {/* Active User */}
           <button 
+            aria-label="User Profile"
             onClick={() => onNavigate('profile')}
             className="w-12 h-12 bg-[#1C1C1E] hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors"
           >
@@ -172,6 +176,7 @@ const Security = ({ onNavigate }) => {
 
         {/* Floating Add Button */}
         <button 
+          aria-label="Generator"
           onClick={() => onNavigate('generator')}
           className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-[0_2px_8px_rgba(255,255,255,0.2)] ml-1 hover:scale-105 active:scale-95 transition-transform"
         >

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChevronLeft, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const PrivacyPolicy = ({ onNavigate }) => {
 
@@ -12,6 +13,7 @@ const PrivacyPolicy = ({ onNavigate }) => {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans"
     >
+      <SEO title="ArcVault | Privacy Policy" />
       {/* BACKGROUND ELEMENTS (Consistent Theme) */}
       <div className="absolute top-0 left-0 w-[120%] h-[60%] -translate-x-[10%] bg-[radial-gradient(ellipse_at_top,#2A2A30_0%,transparent_70%)] opacity-70"></div>
 
@@ -22,6 +24,7 @@ const PrivacyPolicy = ({ onNavigate }) => {
       {/* HEADER BAR */}
       <div className="px-8 pt-6 pb-2 shrink-0 relative z-30 flex items-center justify-between">
         <button 
+          aria-label="Go Back"
           onClick={() => onNavigate('auth')}
           className="w-10 h-10 -ml-2 rounded-full border-[1.5px] border-white/10 bg-[#151515]/80 flex items-center justify-center hover:bg-[#252525] transition-colors backdrop-blur-md"
         >

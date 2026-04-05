@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Lock, Eye, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SEO from '../components/SEO';
 import arcbyteLogo from '../assets/arcbyte.co Logo_white_transparent.png';
 
 const ResetPassword = ({ onNavigate }) => {
@@ -60,6 +61,7 @@ const ResetPassword = ({ onNavigate }) => {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans"
     >
+      <SEO title="ArcVault | Reset Password" />
       {/* SUCCESS OVERLAY */}
       <AnimatePresence>
         {success && (
@@ -143,6 +145,7 @@ const ResetPassword = ({ onNavigate }) => {
             />
             <button 
               type="button"
+              aria-label={showPassword ? "Hide password" : "Show password"}
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-5 text-gray-500 hover:text-white transition-colors"
             >
@@ -162,6 +165,7 @@ const ResetPassword = ({ onNavigate }) => {
             />
             <button 
               type="button"
+              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="absolute right-5 text-gray-500 hover:text-white transition-colors"
             >

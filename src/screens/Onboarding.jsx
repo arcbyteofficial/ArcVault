@@ -3,6 +3,7 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import arcbyteLogo from '../assets/arcbyte.co Logo_white_transparent.png';
 import onboardingImg from '../assets/onboarding-img.png';
+import SEO from '../components/SEO';
 
 const Onboarding = ({ onContinue }) => {
   const containerRef = useRef(null);
@@ -31,6 +32,10 @@ const Onboarding = ({ onContinue }) => {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden transition-all duration-500 font-sans" 
     >
+      <SEO 
+        title="ArcVault | Zero-Knowledge Architecture" 
+        description="A decentralized zero-knowledge encrypted vault protocol engineered for seamless localized device synchronization."
+      />
       {/* BACKGROUND ELEMENTS */}
       
       {/* 1. Base Dark Background */}

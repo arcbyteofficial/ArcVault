@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, Copy, Check, Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const Generator = ({ onNavigate }) => {
   const [length, setLength] = useState(14);
@@ -98,6 +99,7 @@ const Generator = ({ onNavigate }) => {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="w-full h-full bg-[#0A0A0A] flex flex-col relative overflow-hidden font-sans"
     >
+      <SEO title="ArcVault | Secure Password Generator" />
       {/* BACKGROUND ELEMENTS */}
       <div className="absolute top-0 left-0 w-[120%] h-[60%] -translate-x-[10%] bg-[radial-gradient(ellipse_at_top,#2A2A30_0%,transparent_70%)] opacity-70"></div>
 
@@ -109,6 +111,7 @@ const Generator = ({ onNavigate }) => {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <button 
+            aria-label="Go Back"
             onClick={() => onNavigate('dashboard')}
             className="w-10 h-10 -ml-2 rounded-full border-[1.5px] border-white/10 bg-[#151515]/80 flex items-center justify-center hover:bg-[#252525] transition-colors backdrop-blur-md"
           >

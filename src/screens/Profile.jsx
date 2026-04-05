@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Home, Shield, Plus, ChevronRight, Share, Lock, Sparkles, MessageCircle, Key, ShieldCheck, Settings, QrCode, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 import arcbyteLogo from '../assets/arcbyte.co Logo_white_transparent.png';
 
 const Profile = ({ onNavigate }) => {
@@ -53,6 +54,7 @@ const Profile = ({ onNavigate }) => {
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="w-full h-full bg-[#080808] flex flex-col relative overflow-hidden font-sans pb-4"
     >
+      <SEO title="ArcVault | Your Profile" />
       {/* GRID OVERLAY BACKGROUND (Matches mock background lines) */}
 
 
@@ -236,6 +238,7 @@ const Profile = ({ onNavigate }) => {
         <div className="flex items-center space-x-1.5 mr-2 pr-2 border-r border-[#333]">
           {/* Home */}
           <button 
+            aria-label="Dashboard"
             onClick={() => onNavigate('dashboard')}
             className="w-[46px] h-[46px] bg-transparent hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors"
           >
@@ -244,6 +247,7 @@ const Profile = ({ onNavigate }) => {
           
           {/* Shield */}
           <button 
+            aria-label="Security Center"
             onClick={() => onNavigate('security')} 
             className="w-[46px] h-[46px] bg-transparent hover:bg-[#252528] rounded-full flex items-center justify-center transition-colors"
           >
@@ -251,7 +255,7 @@ const Profile = ({ onNavigate }) => {
           </button>
           
           {/* Active User (Profile) */}
-          <button className="w-[46px] h-[46px] bg-[#D1D1D1] rounded-full flex items-center justify-center shadow-[inset_0_-2px_6px_rgba(0,0,0,0.2)] ml-0.5">
+          <button aria-label="User Profile" className="w-[46px] h-[46px] bg-[#D1D1D1] rounded-full flex items-center justify-center shadow-[inset_0_-2px_6px_rgba(0,0,0,0.2)] ml-0.5">
              <svg width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" fill="black" />
@@ -261,6 +265,7 @@ const Profile = ({ onNavigate }) => {
 
         {/* Floating Add Button */}
         <button 
+          aria-label="Generator"
           onClick={() => onNavigate('generator')}
           className="w-[46px] h-[46px] bg-gradient-to-tr from-[#EDEDED] to-[#FFFFFF] rounded-full flex items-center justify-center shadow-[0_2px_10px_rgba(255,255,255,0.2)] ml-0.5 hover:scale-105 active:scale-95 transition-transform"
         >
