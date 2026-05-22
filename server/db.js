@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Ensure connection passes even without SSL locally, but enforce SSL on Railway
+// Database connection configuration
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  ssl: process.env.DB_REQUIRE_SSL === 'true' ? { rejectUnauthorized: false } : false
 });
 
 const initializeDB = async () => {
