@@ -1,5 +1,5 @@
 # Stage 1: Build the React frontend
-FROM node:18-alpine AS frontend-builder
+FROM node:20-slim AS frontend-builder
 WORKDIR /app
 
 # Copy package.json and lock files
@@ -13,7 +13,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Setup the Express backend
-FROM node:18-alpine
+FROM node:20-slim
 WORKDIR /app
 
 # Set environment to production
