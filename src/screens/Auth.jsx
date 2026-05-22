@@ -26,7 +26,7 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
   }, []);
 
   const handleGoogleSuccess = async (tokenResponse) => {
-    const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : 'https://engine.arcbyte.co';
+    const API_URL = import.meta.env.VITE_API_URL || ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '');
     
     try {
       const res = await fetch(`${API_URL}/api/auth/google-login`, {
@@ -67,7 +67,7 @@ const Auth = ({ onNavigate, onLoginSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : 'https://engine.arcbyte.co';
+    const API_URL = import.meta.env.VITE_API_URL || ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '');
     
     if (isForgot) {
       if (!email) return alert('Email required to send reset link.');
