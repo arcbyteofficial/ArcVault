@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy package.json and lock files
 COPY package*.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copy the rest of the source code
 COPY . .
@@ -22,7 +22,7 @@ ENV NODE_ENV=production
 # Copy backend package.json and install production dependencies
 COPY server/package*.json ./server/
 WORKDIR /app/server
-RUN npm install --production
+RUN npm install --production --legacy-peer-deps
 
 # Move back to /app root
 WORKDIR /app
